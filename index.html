@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scalemaker | AI 숏폼 영상 제작 전문 기업</title>
+
+  <!-- 파비콘 -->
+  <link rel="icon" href="스케일메이커%20로고.png" type="image/png">
+  <link rel="apple-touch-icon" href="스케일메이커%20로고.png">
+
+  <!-- OG / SNS 공유 미리보기 -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Scalemaker | AI 숏폼 영상 제작 전문 기업">
+  <meta property="og:description" content="사진 몇 장으로 한 달 치 숏폼 영상을 만들어 드립니다. AI 기반 초고속 영상 제작, 72시간 납품.">
+  <meta property="og:image"       content="스케일메이커%20로고.png">
+  <meta property="og:image:width"  content="600">
+  <meta property="og:image:height" content="600">
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Scalemaker | AI 숏폼 영상 제작 전문 기업">
+  <meta name="twitter:description" content="사진 몇 장으로 한 달 치 숏폼 영상을 만들어 드립니다.">
+  <meta name="twitter:image"       content="스케일메이커%20로고.png">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <style>
+    @font-face {
+      font-family: 'GmarketSansMedium';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+      font-weight: normal; font-style: normal;
+    }
+    @font-face {
+      font-family: 'GmarketSansBold';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+      font-weight: bold; font-style: normal;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0a;
+      --card-bg: #141414;
+      --text: #ffffff;
+      --sub: #888;
+      --border: #1e1e1e;
+      --grad: linear-gradient(135deg, #667eea, #f093fb);
+      --kakao: #FEE500;
+    }
+
+    body {
+      margin: 0; padding: 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'GmarketSansMedium', sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* ── 키프레임 ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-16px); }
+    }
+    @keyframes gradShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes kakaoPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(254,229,0,0.55); }
+      50%       { box-shadow: 0 0 0 18px rgba(254,229,0,0); }
+    }
+    @keyframes particleDrift {
+      0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0.5; }
+      50%  { transform: translateY(-70px) translateX(25px) scale(1.2); opacity: 0.25; }
+      100% { transform: translateY(-140px) translateX(-10px) scale(0.7); opacity: 0; }
+    }
+    @keyframes borderGlow {
+      0%, 100% { border-color: rgba(102,126,234,0.25); }
+      50%       { border-color: rgba(240,147,251,0.5); }
+    }
+    @keyframes countUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes stepLine { from { width: 0; } to { width: 100%; } }
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* ── 스크롤 reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ── 헤더 ── */
+    .sm-header {
+      position: fixed; top: 0; left: 0; width: 100%;
+      background: rgba(10,10,10,0.6); backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      z-index: 9999; padding: 14px 0;
+      transition: background 0.4s, padding 0.3s;
+    }
+    .sm-header.scrolled { background: rgba(8,8,8,0.97); padding: 10px 0; }
+    .sm-header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 30px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .sm-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .sm-logo img { height: 42px; width: auto; display: block; }
+    .sm-logo-text {
+      font-family: 'GmarketSansBold', sans-serif; font-size: 1.15rem; letter-spacing: 2px;
+      background: linear-gradient(135deg, #667eea, #f093fb, #667eea);
+      background-size: 200% 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: gradShift 4s ease infinite;
+    }
+    .sm-nav { display: flex; gap: 35px; list-style: none; margin: 0; padding: 0; }
+    .sm-nav a {
+      color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem;
+      transition: color 0.3s; position: relative; padding-bottom: 4px;
+    }
+    .sm-nav a::after {
+      content: ''; position: absolute; left: 0; bottom: 0;
+      width: 0; height: 1.5px;
+      background: var(--grad); transition: width 0.3s ease;
+    }
+    .sm-nav a:hover { color: #fff; }
+    .sm-nav a:hover::after { width: 100%; }
+
+    /* ── 히어로 ── */
+    .sm-hero {
+      position: relative; height: 100vh; min-height: 750px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .hero-video-swiper { position: absolute; inset: 0; z-index: 1; }
+    .hero-video-swiper .swiper-slide video { width: 100%; height: 100%; object-fit: cover; }
+    .video-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.82) 100%);
+      z-index: 2;
+    }
+    .hero-particles { position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+    .particle {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle, rgba(102,126,234,0.9), transparent);
+      animation: particleDrift linear infinite;
+    }
+    .sm-wrap { max-width: 1200px; margin: 0 auto; padding: 0 30px; position: relative; z-index: 10; text-align: center; }
+    .hero-eyebrow {
+      display: inline-block; font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); margin-bottom: 22px;
+      animation: fadeIn 1s ease 0.3s both;
+    }
+    .sm-hero h1 {
+      font-family: 'GmarketSansBold', sans-serif; font-size: 4rem; color: #fff;
+      line-height: 1.25; margin-bottom: 24px; text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+      animation: fadeUp 1s ease 0.5s both;
+    }
+    .hero-sub {
+      font-size: 1.25rem; color: rgba(255,255,255,0.72); margin-bottom: 52px; line-height: 1.85;
+      animation: fadeUp 1s ease 0.7s both;
+    }
+    .hero-btns { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; animation: fadeUp 1s ease 0.9s both; }
+    .scroll-hint {
+      position: absolute; bottom: 35px; left: 50%; transform: translateX(-50%);
+      z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: fadeIn 1s ease 1.5s both;
+    }
+    .scroll-hint span { font-size: 0.72rem; color: rgba(255,255,255,0.35); letter-spacing: 3px; }
+    .scroll-arrow {
+      width: 18px; height: 18px; border-right: 1.5px solid rgba(255,255,255,0.35);
+      border-bottom: 1.5px solid rgba(255,255,255,0.35);
+      transform: rotate(45deg); animation: floatY 1.5s ease infinite;
+    }
+
+    /* ── 버튼 ── */
+    .sm-btn {
+      padding: 17px 42px; border-radius: 50px; text-decoration: none;
+      font-family: 'GmarketSansBold', sans-serif; font-size: 1rem; cursor: pointer;
+      transition: all 0.35s ease; display: inline-block;
+      border: 1.5px solid rgba(255,255,255,0.7); color: #fff; background: transparent;
+    }
+    .sm-btn:hover {
+      background: #fff; color: #000;
+      box-shadow: 0 12px 40px rgba(255,255,255,0.18);
+      transform: translateY(-4px);
+    }
+    .sm-btn.kakao-btn { background: var(--kakao); color: #3C1E1E; border-color: var(--kakao); }
+    .sm-btn.kakao-btn:hover {
+      background: #ffe633; color: #1a0e0e;
+      box-shadow: 0 12px 40px rgba(254,229,0,0.4);
+      border-color: #ffe633; transform: translateY(-4px);
+    }
+    .sm-btn.secondary { border-color: rgba(255,255,255,0.3); }
+    .sm-btn.secondary:hover { border-color: #fff; background: #fff; color: #000; }
+
+    /* ── 공통 섹션 ── */
+    .sm-sec { padding: 120px 0; }
+    .sec-badge {
+      display: inline-block; font-size: 0.77rem; letter-spacing: 3px; text-transform: uppercase;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 16px; font-family: 'GmarketSansBold', sans-serif;
+    }
+    .sm-sec h2 {
+      font-family: 'GmarketSansBold', sans-serif; font-size: 2.8rem;
+      margin: 0 0 14px; color: #fff; line-height: 1.25;
+    }
+    .sec-underline {
+      width: 0; height: 3px; margin: 0 auto 30px;
+      background: var(--grad); border-radius: 2px;
+      transition: width 0.9s cubic-bezier(0.22,1,0.36,1) 0.3s;
+    }
+    .sec-underline.wide { width: 60px; }
+    .sm-sec .sec-desc { font-size: 1.08rem; color: var(--sub); line-height: 1.85; margin-bottom: 65px; }
+
+    /* ── AS-IS / TO-BE ── */
+    .pain-bg { background: #0a0a0a; }
+    .pain-point-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; text-align: left; }
+    .pain-box {
+      background: var(--card-bg); padding: 48px; border-radius: 28px;
+      border: 1px solid var(--border);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      animation: borderGlow 5s ease infinite;
+    }
+    .pain-box:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(102,126,234,0.14); }
+    .pain-box.solution { background: #fff; border-color: #fff; animation: none; }
+    .pain-box.solution:hover { box-shadow: 0 20px 50px rgba(255,255,255,0.12); }
+    .pain-box h4 { font-family: 'GmarketSansBold', sans-serif; font-size: 1.35rem; margin: 0 0 16px; color: #555; }
+    .pain-box.solution h4 { color: #111; }
+    .pain-box p { color: var(--sub); line-height: 1.9; font-size: 1.03rem; margin: 0; }
+    .pain-box.solution p { color: #333; }
+
+    /* ── 포트폴리오 ── */
+    .portfolio-bg { background: #0d0d0d; }
+    .portfolio-bg .sm-wrap { text-align: center; }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .video-card {
+      position: relative; border-radius: 18px; overflow: hidden;
+      background: var(--card-bg); border: 1px solid var(--border);
+      aspect-ratio: 9 / 16; cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s ease;
+      text-decoration: none; display: block;
+    }
+    .video-card:hover { transform: translateY(-10px) scale(1.025); box-shadow: 0 25px 60px rgba(102,126,234,0.28); }
+    /* 유튜브 썸네일 카드 */
+    .video-card .yt-thumb {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+    .video-card:hover .yt-thumb { transform: scale(1.06); }
+    .play-btn {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(255,255,255,0.18); backdrop-filter: blur(6px);
+      border: 2px solid rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 3; transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .play-btn svg { width: 20px; height: 20px; margin-left: 3px; }
+    .video-card:hover .play-btn {
+      background: rgba(255,255,255,0.9);
+      border-color: #fff;
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+    .video-card:hover .play-btn svg path { fill: #000; }
+    .video-card.empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border: 2px dashed #222; background: #0e0e0e; cursor: default;
+    }
+    .video-card.empty:hover { transform: none; box-shadow: none; }
+    .empty-icon {
+      width: 50px; height: 50px; border-radius: 50%; background: var(--grad);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px; font-size: 1.3rem; animation: floatY 3s ease infinite;
+    }
+    .empty-label { color: #333; font-size: 0.82rem; }
+    .video-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 40%);
+      opacity: 1; pointer-events: none;
+      display: flex; align-items: flex-end; padding: 14px 16px;
+      z-index: 2;
+    }
+    .video-card-label {
+      font-family: 'GmarketSansBold', sans-serif; font-size: 0.82rem; color: #fff;
+      line-height: 1.3; pointer-events: none;
+    }
+    .portfolio-more { margin-top: 58px; }
+
+    /* ── 구분선 ── */
+    .grad-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(102,126,234,0.45) 30%, rgba(240,147,251,0.45) 70%, transparent);
+    }
+
+    /* ════════════════════════════════════════
+       소개 섹션 (About)
+    ════════════════════════════════════════ */
+    .about-bg { background: #090909; }
+
+    /* 숫자 스탯 */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+      margin-bottom: 90px;
+      border: 1px solid var(--border); border-radius: 24px; overflow: hidden;
+    }
+    .stat-item {
+      padding: 44px 30px; text-align: center;
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: #1a1a1a; }
+    .stat-num {
+      font-family: 'GmarketSansBold', sans-serif; font-size: 3rem;
+      background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1; margin-bottom: 10px; display: block;
+    }
+    .stat-label { font-size: 0.9rem; color: var(--sub); line-height: 1.5; }
+
+    /* 차별점 3카드 */
+    .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 90px; }
+    .diff-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 26px; padding: 44px 36px;
+      text-align: left; position: relative; overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s;
+    }
+    .diff-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--grad); opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .diff-card:hover { transform: translateY(-7px); box-shadow: 0 22px 55px rgba(102,126,234,0.18); border-color: rgba(102,126,234,0.35); }
+    .diff-card:hover::before { opacity: 1; }
+    .diff-icon {
+      width: 58px; height: 58px; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(102,126,234,0.15), rgba(240,147,251,0.1));
+      border: 1px solid rgba(102,126,234,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 22px;
+    }
+    .diff-card h3 {
+      font-family: 'GmarketSansBold', sans-serif; font-size: 1.25rem; color: #fff;
+      margin: 0 0 12px; line-height: 1.3;
+    }
+    .diff-card p { color: var(--sub); font-size: 0.97rem; line-height: 1.8; margin: 0; }
+    .diff-card .diff-tag {
+      display: inline-block; margin-top: 18px;
+      font-size: 0.75rem; color: #667eea;
+      background: rgba(102,126,234,0.1); border: 1px solid rgba(102,126,234,0.2);
+      padding: 4px 12px; border-radius: 20px;
+    }
+
+    /* 제작 프로세스 */
+    .process-wrap { position: relative; }
+    .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+    .process-grid::before {
+      content: '';
+      position: absolute; top: 35px; left: 12.5%; right: 12.5%; height: 1px;
+      background: linear-gradient(90deg, rgba(102,126,234,0.5), rgba(240,147,251,0.5));
+      z-index: 0;
+    }
+    .process-step { text-align: center; padding: 0 20px; position: relative; z-index: 1; }
+    .process-num {
+      width: 70px; height: 70px; border-radius: 50%; margin: 0 auto 20px;
+      background: var(--card-bg); border: 2px solid rgba(102,126,234,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'GmarketSansBold', sans-serif; font-size: 1.3rem; color: #667eea;
+      transition: all 0.4s ease; position: relative;
+    }
+    .process-step:hover .process-num {
+      background: linear-gradient(135deg, #667eea, #f093fb);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 8px 30px rgba(102,126,234,0.4);
+      transform: scale(1.1);
+    }
+    .process-step h4 {
+      font-family: 'GmarketSansBold', sans-serif; font-size: 1.05rem; color: #fff;
+      margin: 0 0 10px;
+    }
+    .process-step p { font-size: 0.88rem; color: var(--sub); line-height: 1.7; margin: 0; }
+    .process-arrow {
+      position: absolute; top: 22px; right: -16px;
+      font-size: 1.1rem; color: rgba(102,126,234,0.5); z-index: 2;
+    }
+
+    /* ── CTA 섹션 ── */
+    .cta-sec { background: #0a0a0a; text-align: center; }
+    .cta-card {
+      background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(240,147,251,0.07));
+      border: 1px solid rgba(102,126,234,0.22);
+      border-radius: 32px; padding: 90px 60px;
+      position: relative; overflow: hidden;
+    }
+    .cta-card::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 350px; height: 350px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(102,126,234,0.13), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-card::after {
+      content: ''; position: absolute; bottom: -100px; left: -100px;
+      width: 350px; height: 350px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,147,251,0.1), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── 플로팅 카카오 ── */
+    .kakao-float {
+      position: fixed; bottom: 35px; right: 35px; z-index: 9998;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .kakao-float-tooltip {
+      background: rgba(10,10,10,0.9); color: #fff; font-size: 0.75rem;
+      padding: 7px 14px; border-radius: 20px; white-space: nowrap;
+      opacity: 0; transform: translateY(6px); transition: all 0.3s ease;
+      pointer-events: none; border: 1px solid rgba(255,255,255,0.08);
+    }
+    .kakao-float:hover .kakao-float-tooltip { opacity: 1; transform: translateY(0); }
+    .kakao-float-btn {
+      width: 64px; height: 64px; border-radius: 50%; background: var(--kakao);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; cursor: pointer;
+      box-shadow: 0 6px 26px rgba(254,229,0,0.4);
+      animation: kakaoPulse 2.5s ease infinite;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .kakao-float-btn:hover { transform: scale(1.12); box-shadow: 0 10px 36px rgba(254,229,0,0.55); animation: none; }
+    .kakao-float-btn svg { width: 34px; height: 34px; }
+
+    /* ── 푸터 ── */
+    .sm-footer {
+      background-color: #050505; padding: 70px 0 36px;
+      border-top: 1px solid rgba(255,255,255,0.04); text-align: center;
+    }
+    .ft-logo { display: inline-block; margin-bottom: 28px; }
+    .ft-logo img { height: 52px; width: auto; opacity: 0.85; transition: opacity 0.3s; }
+    .ft-logo img:hover { opacity: 1; }
+    .ft-info { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+    .ft-info a { color: #4a4a4a; text-decoration: none; font-size: 0.92rem; transition: color 0.3s; }
+    .ft-info a:hover { color: #fff; }
+    .ft-info span { color: #222; margin: 0 12px; }
+    .ft-sub { font-size: 0.85rem; color: #333; margin-top: 5px; }
+    .ft-copy {
+      padding-top: 26px; border-top: 1px solid rgba(255,255,255,0.04);
+      color: #282828; font-size: 0.8rem; letter-spacing: 0.5px;
+    }
+
+    /* ── 반응형 ── */
+    @media (max-width: 1024px) {
+      .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid .stat-item:nth-child(2) { border-right: none; }
+      .stats-grid .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
+      .stats-grid .stat-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+      .process-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+      .process-grid::before { display: none; }
+      .process-arrow { display: none; }
+    }
+    @media (max-width: 768px) {
+      .sm-hero h1 { font-size: 2.3rem; }
+      .sm-sec h2 { font-size: 2rem; }
+      .pain-point-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .diff-grid { grid-template-columns: 1fr; }
+      .sm-nav { gap: 20px; }
+      .cta-card { padding: 55px 26px; }
+      .kakao-float { bottom: 22px; right: 22px; }
+      .sm-logo img { height: 34px; }
+    }
+    @media (max-width: 480px) {
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .kakao-float-btn { width: 54px; height: 54px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── 플로팅 카카오 버튼 ── -->
+  <div class="kakao-float">
+    <span class="kakao-float-tooltip">카카오로 문의하기</span>
+    <a href="https://pf.kakao.com/_RxnxmIX" target="_blank" rel="noopener" class="kakao-float-btn" aria-label="카카오 문의">
+      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <path d="M256 80C149.5 80 64 149.6 64 235.5c0 50.6 28.6 95.5 72.4 124.2l-18.5 67.7c-1.5 5.5 4.7 9.9 9.5 6.8L212 385c14.3 2.8 29 4.3 44 4.3 106.5 0 192-69.6 192-155.8S362.5 80 256 80z" fill="#3C1E1E"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ── 헤더 ── -->
+  <header class="sm-header" id="mainHeader">
+    <div class="sm-header-inner">
+      <a href="#" class="sm-logo">
+        <img src="스케일메이커%20로고.png" alt="Scalemaker">
+        <span class="sm-logo-text">SCALEMAKER</span>
+      </a>
+      <ul class="sm-nav">
+        <li><a href="#portfolio">포트폴리오</a></li>
+        <li><a href="#contact">문의하기</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ── 히어로 ── -->
+  <section class="sm-hero">
+    <div class="swiper hero-video-swiper">
+      <div class="swiper-wrapper" id="videoWrapper"></div>
+      <div class="video-overlay"></div>
+    </div>
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="sm-wrap">
+      <p class="hero-eyebrow">AI Short-form Video Agency</p>
+      <h1>영상 제작의 패러다임,<br>스케일메이커가 바꿉니다.</h1>
+      <p class="hero-sub"><strong>한 달 치 숏폼 콘텐츠, 이제 고민하지 마세요.</strong><br>AI 기술로 가장 트렌디한 영상을 가장 빠르게 제작해 드립니다.</p>
+      <div class="hero-btns">
+        <a href="#portfolio" class="sm-btn primary">포트폴리오 보기</a>
+        <a href="https://pf.kakao.com/_RxnxmIX" target="_blank" rel="noopener" class="sm-btn kakao-btn">카카오로 문의하기</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>SCROLL</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ── Why Scalemaker ── -->
+  <section class="sm-sec pain-bg" id="about">
+    <div class="sm-wrap">
+      <div class="sec-badge reveal">Why Scalemaker</div>
+      <h2 class="reveal reveal-delay-1">영상 마케팅, 아직도<br>이렇게 하고 계신가요?</h2>
+      <div class="sec-underline reveal reveal-delay-1"></div>
+      <div class="pain-point-grid">
+        <div class="pain-box reveal reveal-delay-2">
+          <h4>흔한 방식</h4>
+          <p>
+            촬영 날짜 잡고 → 장비 준비하고 → 편집자 구하고 → 자막 수정하고 → 썸네일 만들고 →<br><br>
+            영상 1개에 <strong style="color:#ff6b6b;">3주~2달</strong>, 비용은 <strong style="color:#ff6b6b;">건당 최소 50~300만원</strong>.<br>
+            그렇게 힘들게 만들어도 알고리즘은 매일 새 콘텐츠를 요구합니다.
+          </p>
+        </div>
+        <div class="pain-box solution reveal reveal-delay-3">
+          <h4>스케일메이커 방식</h4>
+          <p>
+            <strong>사진 몇 장 + 키워드 전달</strong> → 그게 전부입니다.<br><br>
+            스케일메이커의 AI 영상 파이프라인이 촬영 없이 고퀄리티 숏폼을 만들어냅니다.<br><br>
+            납품까지 <strong>72시간 이내</strong>, 한 달 콘텐츠를 <strong>한 번에 해결</strong>하세요.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="grad-divider"></div>
+
+  <!-- ── 포트폴리오 ── -->
+  <section class="sm-sec portfolio-bg" id="portfolio">
+    <div class="sm-wrap">
+      <div class="sec-badge reveal">Portfolio</div>
+      <h2 class="reveal reveal-delay-1">직접 확인하세요</h2>
+      <div class="sec-underline reveal reveal-delay-1"></div>
+      <p class="sec-desc reveal reveal-delay-2">AI가 만든 숏폼, 퀄리티가 다릅니다.</p>
+
+      <div class="portfolio-grid" id="portfolioGrid">
+
+        <a class="video-card reveal reveal-delay-1" href="https://www.youtube.com/watch?v=Mh1wyOaiBXw" target="_blank" rel="noopener">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/Mh1wyOaiBXw/maxresdefault.jpg" alt="AI 광고영상 1" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+          <div class="video-card-overlay"><span class="video-card-label">AI 광고영상 (1)</span></div>
+        </a>
+
+        <a class="video-card reveal reveal-delay-2" href="https://www.youtube.com/watch?v=nKPhX6V35OA" target="_blank" rel="noopener">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/nKPhX6V35OA/maxresdefault.jpg" alt="AI 광고영상 2" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+          <div class="video-card-overlay"><span class="video-card-label">AI 광고영상 (2)</span></div>
+        </a>
+
+        <a class="video-card reveal reveal-delay-3" href="https://www.youtube.com/watch?v=rpM8jYUsHkk" target="_blank" rel="noopener">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/rpM8jYUsHkk/maxresdefault.jpg" alt="AI 광고영상 3" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+          <div class="video-card-overlay"><span class="video-card-label">AI 광고영상 (3)</span></div>
+        </a>
+
+        <a class="video-card reveal reveal-delay-4" href="https://www.youtube.com/watch?v=sEbpgIIuqVg" target="_blank" rel="noopener">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/sEbpgIIuqVg/maxresdefault.jpg" alt="촬영없는 AI 광고" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+          <div class="video-card-overlay"><span class="video-card-label">촬영없는 AI 광고</span></div>
+        </a>
+
+        <a class="video-card reveal reveal-delay-1" href="https://www.youtube.com/watch?v=Dnr7ApQe4-k" target="_blank" rel="noopener">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/Dnr7ApQe4-k/maxresdefault.jpg" alt="AI 홍보영상" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+          <div class="video-card-overlay"><span class="video-card-label">AI 홍보영상</span></div>
+        </a>
+
+        <a class="video-card reveal reveal-delay-2" href="https://www.youtube.com/watch?v=WDw6ObRz5FU" target="_blank" rel="noopener">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/WDw6ObRz5FU/maxresdefault.jpg" alt="인테리어 AI영상" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+          <div class="video-card-overlay"><span class="video-card-label">인테리어 AI영상</span></div>
+        </a>
+
+        <a class="video-card reveal reveal-delay-3" href="https://www.youtube.com/watch?v=hDr9x1oyeU8" target="_blank" rel="noopener">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/hDr9x1oyeU8/maxresdefault.jpg" alt="AI 메타광고소재" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+          <div class="video-card-overlay"><span class="video-card-label">AI 메타광고소재</span></div>
+        </a>
+
+        <a class="video-card reveal reveal-delay-4" href="https://www.youtube.com/shorts/D-ptJLuIwew" target="_blank" rel="noopener">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/D-ptJLuIwew/maxresdefault.jpg" alt="AI 숏폼 영상" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div>
+          <div class="video-card-overlay"><span class="video-card-label">AI 숏폼</span></div>
+        </a>
+
+      </div>
+
+      <div class="portfolio-more reveal">
+        <a href="https://pf.kakao.com/_RxnxmIX" target="_blank" rel="noopener" class="sm-btn kakao-btn">내 업종 영상 제작 문의하기</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="grad-divider"></div>
+
+  <!-- ══════════════════════════════════════
+       소개 섹션 — 포트폴리오와 문의 사이
+  ══════════════════════════════════════ -->
+  <section class="sm-sec about-bg" id="about-detail">
+    <div class="sm-wrap">
+
+      <!-- 타이틀 -->
+      <div class="sec-badge reveal">스케일메이커를 선택해야 하는 이유</div>
+      <h2 class="reveal reveal-delay-1">숫자가 증명합니다</h2>
+      <div class="sec-underline reveal reveal-delay-1"></div>
+      <p class="sec-desc reveal reveal-delay-2">
+        스케일메이커는 AI 기반 영상 제작 기술로<br>
+        브랜드의 콘텐츠 생산 속도를 10배 높입니다.
+      </p>
+
+      <!-- 숫자 스탯 -->
+      <div class="stats-grid reveal reveal-delay-2">
+        <div class="stat-item">
+          <span class="stat-num" data-target="300">0</span>
+          <span class="stat-label">누적 제작 영상<br>300편 이상</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="72">0</span>
+          <span class="stat-label">평균 납품 시간<br>72시간 이내</span>
+
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="97">0</span>
+          <span class="stat-label">고객 재의뢰율<br>97%</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-target="10">0</span>
+          <span class="stat-label">대응 업종<br>10개 이상</span>
+        </div>
+      </div>
+
+      <!-- 3가지 차별점 -->
+      <div class="diff-grid">
+        <div class="diff-card reveal reveal-delay-1">
+          <div class="diff-icon">🤖</div>
+          <h3>촬영 없는 AI 영상 제작</h3>
+          <p>
+            일반 AI 툴과 다릅니다.<br>
+            스케일메이커는 숏폼에 최적화된 자체 AI 파이프라인으로 사진만으로 움직이는 영상을 만들어냅니다. 카메라 없이, 모델 없이, 스튜디오 없이.
+          </p>
+          <span class="diff-tag"># 사진 → 프로 영상</span>
+        </div>
+        <div class="diff-card reveal reveal-delay-2">
+          <div class="diff-icon">⚡</div>
+          <h3>업계 최단 납품 72시간</h3>
+          <p>
+            의뢰 후 72시간 이내 1차 시안을 전달합니다.<br>
+            기획부터 수정까지 전담 매니저가 책임지며, 인스타·틱톡·유튜브 쇼츠 포맷에 맞게 최적화해서 드립니다.
+          </p>
+          <span class="diff-tag"># 빠른 납품 · 무제한 수정</span>
+        </div>
+        <div class="diff-card reveal reveal-delay-3">
+          <div class="diff-icon">🎯</div>
+          <h3>업종별 트렌드 맞춤 제작</h3>
+          <p>
+            뷰티·음식·병원·부동산·교육 등 어떤 업종이든 OK.<br>
+            업종별 숏폼 트렌드를 실시간으로 분석해 지금 알고리즘이 밀어주는 포맷으로 제작합니다.
+          </p>
+          <span class="diff-tag"># 모든 업종 대응</span>
+        </div>
+      </div>
+
+      <!-- 제작 프로세스 -->
+      <div class="sec-badge reveal" style="margin-top: 20px;">Process</div>
+      <h2 class="reveal reveal-delay-1" style="margin-bottom: 14px;">이렇게 진행됩니다</h2>
+      <div class="sec-underline reveal reveal-delay-1"></div>
+      <p class="sec-desc reveal reveal-delay-2">의뢰부터 납품까지, 단 4단계</p>
+
+      <div class="process-grid reveal reveal-delay-2">
+        <div class="process-step">
+          <div class="process-num">01<span class="process-arrow">›</span></div>
+          <h4>자료 전달</h4>
+          <p>사진·로고·브랜드 키워드를<br>카카오로 간편하게 전달</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">02<span class="process-arrow">›</span></div>
+          <h4>AI 영상 생성</h4>
+          <p>자체 AI 파이프라인으로<br>고퀄리티 숏폼 자동 제작</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">03<span class="process-arrow">›</span></div>
+          <h4>검수 & 수정</h4>
+          <p>전담 매니저 QC 후<br>피드백 반영 무제한 수정</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">04</div>
+          <h4>최종 납품</h4>
+          <p>플랫폼별 최적화 포맷으로<br>72시간 이내 전달 완료</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="grad-divider"></div>
+
+  <!-- ── CTA ── -->
+  <section class="sm-sec cta-sec" id="contact">
+    <div class="sm-wrap">
+      <div class="cta-card">
+        <div class="sec-badge reveal">Contact</div>
+        <h2 class="reveal reveal-delay-1">지금 바로 시작하세요</h2>
+        <div class="sec-underline reveal reveal-delay-1"></div>
+        <p class="sec-desc reveal reveal-delay-2">
+          업종, 예산, 원하는 스타일을 말씀해 주시면<br>
+          빠르게 샘플 영상과 견적을 보내드립니다.
+        </p>
+        <div class="hero-btns reveal reveal-delay-3">
+          <a href="https://pf.kakao.com/_RxnxmIX" target="_blank" rel="noopener" class="sm-btn kakao-btn">카카오로 상담받기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 푸터 ── -->
+  <footer class="sm-footer">
+    <div class="sm-wrap">
+      <div class="ft-logo">
+        <img src="스케일메이커%20로고.png" alt="Scalemaker">
+      </div>
+      <div class="ft-info">
+        <div>
+          <a href="mailto:scalemaker123@gmail.com">scalemaker123@gmail.com</a>
+        </div>
+        <div class="ft-sub">Premium AI Short-form Video Agency</div>
+      </div>
+      <div class="ft-copy">© 2026 Scalemaker. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    /* ─ 헤더 스크롤 ─ */
+    const header = document.getElementById('mainHeader');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    /* ─ 히어로 배경 영상 ─ */
+    const heroVideoUrls = [
+      "https://ai-end.store/wp-content/uploads/2026/03/76ef2203-c3b6-4265-99ef-556a58b2fc0e-1.mp4",
+      "https://ai-end.store/wp-content/uploads/2026/03/hf_20260215_065043_00e08fde-09d7-4c55-81ed-c0adcf691b59.mp4",
+      "https://ai-end.store/wp-content/uploads/2026/03/aa3b5db8-5848-415b-b306-8cf8327b65b1-1.mp4",
+      "https://ai-end.store/wp-content/uploads/2026/03/hf_20260205_170509_81f7fc4e-f529-4de6-826b-520fe56f0f9f-2.mp4",
+      "https://ai-end.store/wp-content/uploads/2026/03/hf_20260205_171432_c5544b85-b17f-410d-bc85-3405ed9b158b-1.mp4",
+      "https://ai-end.store/wp-content/uploads/2026/03/사람들이_이야기하는_모습_비디오_생성.mp4"
+    ];
+    for (let i = heroVideoUrls.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [heroVideoUrls[i], heroVideoUrls[j]] = [heroVideoUrls[j], heroVideoUrls[i]];
+    }
+    const vWrapper = document.getElementById('videoWrapper');
+    heroVideoUrls.forEach(url => {
+      const s = document.createElement('div');
+      s.className = 'swiper-slide';
+      s.innerHTML = `<video autoplay muted loop playsinline src="${url}"></video>`;
+      vWrapper.appendChild(s);
+    });
+    new Swiper('.hero-video-swiper', {
+      effect: 'fade', fadeEffect: { crossFade: true },
+      loop: true, speed: 2500,
+      autoplay: { delay: 5000, disableOnInteraction: false },
+    });
+
+    /* ─ 히어로 파티클 ─ */
+    const pCont = document.getElementById('heroParticles');
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const sz = Math.random() * 6 + 2;
+      p.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;bottom:${Math.random()*40}%;animation-duration:${Math.random()*6+5}s;animation-delay:${Math.random()*6}s;`;
+      pCont.appendChild(p);
+    }
+
+    /* ─ 스크롤 reveal + 언더라인 ─ */
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        const ul = entry.target.closest('.sm-wrap, .cta-card')?.querySelector('.sec-underline');
+        if (ul) ul.classList.add('wide');
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    /* ─ 숫자 카운터 ─ */
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll('.stat-num[data-target]').forEach(el => {
+          const target = +el.dataset.target;
+          const suffix = target === 72 ? 'hr' : target === 97 ? '%' : '+';
+          const dur = 1800;
+          const step = Math.ceil(dur / (target * 16));
+          let cur = 0;
+          const timer = setInterval(() => {
+            cur = Math.min(cur + Math.ceil(target / (dur / 16)), target);
+            el.textContent = cur + suffix;
+            if (cur >= target) clearInterval(timer);
+          }, 16);
+        });
+        counterObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.3 });
+    const statsEl = document.querySelector('.stats-grid');
+    if (statsEl) counterObs.observe(statsEl);
+
+  </script>
+
+</body>
+</html>
