@@ -466,32 +466,123 @@
       color: #282828; font-size: 0.8rem; letter-spacing: 0.5px;
     }
 
-    /* ── 반응형 ── */
+    /* ── 햄버거 메뉴 ── */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: #fff; border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── 태블릿 (1024px) ── */
     @media (max-width: 1024px) {
       .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .stats-grid .stat-item:nth-child(2) { border-right: none; }
       .stats-grid .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
       .stats-grid .stat-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
-      .process-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+      .process-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 20px; }
       .process-grid::before { display: none; }
       .process-arrow { display: none; }
+      .diff-grid { gap: 16px; }
     }
+
+    /* ── 모바일 (768px) ── */
     @media (max-width: 768px) {
-      .sm-hero h1 { font-size: 2.3rem; }
-      .sm-sec h2 { font-size: 2rem; }
-      .pain-point-grid { grid-template-columns: 1fr; }
-      .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .diff-grid { grid-template-columns: 1fr; }
-      .sm-nav { gap: 20px; }
-      .cta-card { padding: 55px 26px; }
-      .kakao-float { bottom: 22px; right: 22px; }
-      .sm-logo img { height: 34px; }
-    }
-    @media (max-width: 480px) {
-      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+      /* 헤더 */
+      .sm-header { padding: 12px 0; }
+      .sm-header-inner { padding: 0 20px; }
+      .sm-logo img { height: 32px; }
+      .sm-logo-text { font-size: 0.95rem; letter-spacing: 1px; }
+      .hamburger { display: flex; }
+      .sm-nav {
+        display: none; position: fixed; inset: 0; top: 58px;
+        background: rgba(8,8,8,0.98); backdrop-filter: blur(20px);
+        flex-direction: column; align-items: center; justify-content: center;
+        gap: 40px; z-index: 9998;
+      }
+      .sm-nav.open { display: flex; }
+      .sm-nav a { font-size: 1.5rem; color: rgba(255,255,255,0.8); }
+
+      /* 공통 */
+      .sm-wrap { padding: 0 20px; }
+      .sm-sec { padding: 70px 0; }
+      .sm-sec h2 { font-size: 1.85rem; }
+      .sm-sec .sec-desc { font-size: 0.98rem; margin-bottom: 44px; }
+
+      /* 히어로 */
+      .sm-hero { min-height: 100svh; }
+      .hero-eyebrow { font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 14px; }
+      .sm-hero h1 { font-size: 2.1rem; margin-bottom: 18px; }
+      .hero-sub { font-size: 1rem; margin-bottom: 36px; }
+      .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
+      .sm-btn { width: 100%; max-width: 320px; text-align: center; padding: 16px 30px; font-size: 0.95rem; }
+
+      /* AS-IS / TO-BE */
+      .pain-point-grid { grid-template-columns: 1fr; gap: 16px; }
+      .pain-box { padding: 32px 28px; border-radius: 20px; }
+      .pain-box h4 { font-size: 1.15rem; }
+      .pain-box p { font-size: 0.95rem; }
+
+      /* 포트폴리오 */
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .portfolio-more { margin-top: 36px; }
+
+      /* 스탯 */
+      .stats-grid { margin-bottom: 55px; border-radius: 18px; }
+      .stat-item { padding: 30px 16px; }
+      .stat-num { font-size: 2.2rem; }
+      .stat-label { font-size: 0.8rem; }
+
+      /* 차별점 */
+      .diff-grid { grid-template-columns: 1fr; gap: 14px; margin-bottom: 55px; }
+      .diff-card { padding: 30px 26px; border-radius: 20px; }
+      .diff-card h3 { font-size: 1.1rem; }
+      .diff-card p { font-size: 0.9rem; }
+      .diff-icon { width: 48px; height: 48px; margin-bottom: 16px; }
+
+      /* 프로세스 */
+      .process-grid { grid-template-columns: 1fr; gap: 32px; }
+      .process-step { display: flex; align-items: flex-start; gap: 20px; text-align: left; }
+      .process-num { width: 54px; height: 54px; min-width: 54px; margin: 0; font-size: 1.05rem; }
+      .process-step h4 { margin-bottom: 6px; font-size: 1rem; }
+      .process-step p { font-size: 0.85rem; }
+
+      /* CTA */
+      .cta-card { padding: 50px 22px; border-radius: 22px; }
+      .cta-card .sec-desc { font-size: 0.95rem; }
+
+      /* 푸터 */
+      .sm-footer { padding: 50px 0 28px; }
+      .ft-logo img { height: 42px; }
+      .ft-info a { font-size: 0.85rem; }
+
+      /* 플로팅 버튼 */
+      .kakao-float { bottom: 20px; right: 18px; }
       .kakao-float-btn { width: 54px; height: 54px; }
+      .kakao-float-btn svg { width: 28px; height: 28px; }
+      .kakao-float-tooltip { display: none; }
+    }
+
+    /* ── 소형 모바일 (480px) ── */
+    @media (max-width: 480px) {
+      .sm-logo-text { display: none; }
+      .sm-hero h1 { font-size: 1.75rem; }
+      .sm-sec h2 { font-size: 1.6rem; }
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .video-card { border-radius: 12px; }
+      .pain-box { padding: 26px 22px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-num { font-size: 1.9rem; }
+      .diff-card { padding: 26px 20px; }
+      .cta-card { padding: 40px 18px; }
+      .sm-btn { max-width: 100%; padding: 15px 24px; }
     }
   </style>
 </head>
@@ -514,7 +605,10 @@
         <img src="스케일메이커%20로고.png" alt="Scalemaker">
         <span class="sm-logo-text">SCALEMAKER</span>
       </a>
-      <ul class="sm-nav">
+      <button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="sm-nav" id="mobileNav">
         <li><a href="#portfolio">포트폴리오</a></li>
         <li><a href="#contact">문의하기</a></li>
       </ul>
@@ -781,6 +875,22 @@
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 50);
     }, { passive: true });
+
+    /* ─ 햄버거 메뉴 ─ */
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
 
     /* ─ 히어로 배경 영상 ─ */
     const heroVideoUrls = [
